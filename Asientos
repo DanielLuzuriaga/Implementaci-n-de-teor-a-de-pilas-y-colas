@@ -1,0 +1,76 @@
+using System;
+using System.Collections.Generic;
+
+class Persona
+{
+    public string Nombre { get; set; }
+
+    public Persona(string nombre)
+    {
+        Nombre = nombre;
+    }
+}
+
+class Programa
+{
+    static Queue<Persona> cola = new Queue<Persona>();
+    static int capacidad = 30;
+
+    public static void Main(string[] args)
+    {
+        int opcion;
+
+        do
+        {
+            Console.WriteLine("\n--- UNIVERSIDAD ESTATAL AMAZÓNICA ---");
+            Console.WriteLine("\n--- MENU ---");
+            Console.WriteLine("1. Ingresar persona");
+            Console.WriteLine("2. Asignar asiento");
+            Console.WriteLine("3. Ver cola");
+            Console.WriteLine("4. Salir");
+            Console.Write("Seleccione una opción: ");
+
+            opcion = int.Parse(Console.ReadLine());
+
+            switch (opcion)
+            {
+                case 1:
+                    if (cola.Count < capacidad)
+                    {
+                        Console.Write("Nombre: ");
+                        string nombre = Console.ReadLine();
+                        cola.Enqueue(new Persona(nombre));
+                    }
+                    else
+                    {
+                        Console.WriteLine("Cola llena");
+                    }
+                    break;
+
+                case 2:
+                    if (cola.Count > 0)
+                    {
+                        Persona p = cola.Dequeue();
+                        Console.WriteLine("Asiento asignado a: " + p.Nombre);
+                    }
+                    else
+                    {
+                        Console.WriteLine("No hay personas en espera");
+                    }
+                    break;
+
+                case 3:
+                    Console.WriteLine("\nPersonas en la cola:");
+                    foreach (var p in cola)
+                    {
+                        Console.WriteLine(p.Nombre);
+                    }
+
+                    if (cola.Count == 0)
+                        Console.WriteLine("La cola está vacía.");
+                    break;
+            }
+
+        } while (opcion != 4);
+    }
+}
